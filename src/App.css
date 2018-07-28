@@ -1,0 +1,94 @@
+
+body {
+  background-color: #141414;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 1em;
+  line-height: 1.625;
+  color: #ffffff;
+  font-weight: 400;
+}
+
+.brand {
+  font-weight: 400;
+  font-size: 1.2em;
+}
+
+.nav-listings li {
+  font-weight: bold;
+}
+
+.container {
+  margin: 0 auto;
+}
+
+
+.header {
+  height: 600px;
+  background-image: url(https://images.pexels.com/photos/1265610/pexels-photo-1265610.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+}
+
+.page-container {
+  margin-top: 120px;
+}
+
+.cta-h1 {
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.cta-h2 {
+  font-size: 40px;
+}
+
+.cta-popular-categories {
+  padding: 0;
+}
+.cta-popular-categories a {
+  color: #FFF;
+  font-size: 300;
+}
+
+.cta-popular-categories ul {
+  list-style-type: none;
+  float: left;
+}
+
+.popular-cats {
+  font-weight: bold;
+}
+
+p.flex {
+    font-size: 15px;
+    padding: 0;
+    margin-left: -40px;
+}
+
+.top-picks h1{
+  font-size: 2.61792em;
+  margin-bottom: 0.47748em;
+  -webkit-font-kerning: normal;
+    font-kerning: normal;
+    -webkit-font-variant-ligatures: common-ligatures contextual discretionary-ligatures;
+    font-variant-ligatures: common-ligatures contextual discretionary-ligatures;
+    -webkit-font-feature-settings: 'kern', 'liga', 'clig', 'calt', 'dlig';
+    font-feature-settings: 'kern', 'liga', 'clig', 'calt', 'dlig';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: block;
+    margin-bottom: 0.71794em;
+    color: #ffffff;
+    font-size: 1.7411em;
+    line-height: 1.222;
+    font-weight: 600;
+    font-family: Helvetica, Arial, 'Lucida Grande', sans-serif;
+}
+
+.top-picks h3 {
+    line-height: 1.6;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+}
