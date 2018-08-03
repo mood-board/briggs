@@ -14,10 +14,10 @@ const PageContainer = () => {
             placeholder="Search high resolution images" />
 
           <div className="cta-popular-categories mt-8">
-            <p className="flex">
+            <div className="flex">
               <ul className="flex">
                 <li>
-                  <p className="bold popular-cats">Popular Categories: </p>
+                  <span className="bold popular-cats">Popular Categories: </span>
                 </li>
                 <li className="ml-4 mr-4">
                   <a href="/shoes">Shoes</a>
@@ -39,7 +39,7 @@ const PageContainer = () => {
                   <a href="/photography">Photography</a>
                 </li>
               </ul>
-            </p>
+            </div>
           </div>
         </div>
       </div>
