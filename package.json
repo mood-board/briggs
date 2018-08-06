@@ -1,21 +1,12 @@
 {
-<<<<<<< HEAD
-  "name": "brigg",
-=======
+
   "name": "seemars",
->>>>>>> origin/develop
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
-<<<<<<< HEAD
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
-=======
-    "masonry-layout": "^4.2.2",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
->>>>>>> origin/develop
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4"
   },
