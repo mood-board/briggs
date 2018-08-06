@@ -1,23 +1,18 @@
 import React, { Component } from 'react';
-import {Switch, Route, BrowserRouter as Router} from 'react-router-dom'
+import {Switch, BrowserRouter, Route} from 'react-router-dom'
 import './App.css';
-import LandingPage from "./components/LandingPage"
-import PhotoDetail from "./components/PhotoDetail"
+import LandingPage from './components/LandingPage';
+import PhotoDetail from './components/PhotoDetail';
 
-class App extends Component {
-  render() {
-    return (
-      <React.Fragment>
-        <Router>
-          <Switch>
-            <Route exact path="/" component={LandingPage} />
-            <Route path="/photos/:photo-slug" component={PhotoDetail} />
-          </Switch>
-        </Router>
-
-      </React.Fragment>
-    );
-  }
-}
+const App = () =>(
+  <React.Fragment>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={LandingPage} />
+        <Route exact path="/photos/:id" component={PhotoDetail} />
+      </Switch>
+    </BrowserRouter>
+  </React.Fragment>
+);
 
 export default App;

@@ -1,28 +1,25 @@
-import React, {Component} from 'react'
+import React from 'react'
 import SiteNavigation from "./SiteNavigation"
 import PageContainer from "./PageContainer"
 import PhotoGallery from "./PhotoGallery"
 import TopPicks from './TopPicks'
+import "./LP.css"
 
 
-class LandingPage extends Component {
-    render() {
-        return(
-        <main>
-            <div className="header">
-                <SiteNavigation />
-                <PageContainer />
-            </div>
+const  LandingPage = () => (
+    <main id="lp">
+        <div className="header">
+            <SiteNavigation />
+            <PageContainer />
+        </div>
 
-            <div className="mt-8">
-                <TopPicks />
-            </div>
+        <div className="mt-8">
+            <TopPicks />
+        </div>
 
-            <section className="mt-8">
-                <PhotoGallery />
-            </section>
-        </main>
-        )
-    }
-}
+        <section className="mt-8">
+            <PhotoGallery />
+        </section>
+    </main>
+)
 export default LandingPage

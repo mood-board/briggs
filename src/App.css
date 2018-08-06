@@ -1,6 +1,7 @@
 
 body {
-  background-color: #141414;
+  background: #141414;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
@@ -92,3 +93,50 @@ p.flex {
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
 }
+
+main {
+  color: #FFF;
+}
+
+
+.photo-detail {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  padding: 12px 0px;
+}
+
+.left {
+  width: 70%;
+}
+
+.user-details {
+  width: 25%;
+  float: left;
+}
+
+.image-collage img {
+  display: block;
+  height: auto;
+  width: contain;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0,0,30,.3);
+  cursor: pointer;
+  background: linear-gradient(45deg,#efefef 25%,transparent 25%,transparent 75%,#efefef 75%,#efefef),linear-gradient(45deg,#efefef 25%,transparent 25%,transparent 75%,#efefef 75%,#efefef);
+  background-position: 0 0,10px 10px;
+  background-color: #fff;
+  background-size: 21px 21px;
+}
+
+.author-dp {
+  height: 40px;
+  width: 40px;
+}
+
+.related-images  {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
