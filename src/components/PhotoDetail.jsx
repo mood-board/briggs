@@ -10,6 +10,18 @@ const PhotoDetail = () => (
         <div className="photo-detail">
           <div className="left image-collage">
             <img className="border-black border-2" src="https://burst.shopifycdn.com/photos/woman-shopping-for-clothes_925x@2x.progressive.jpg" alt="" />
+
+            <div>
+              <h3 className="mb-4 mt-12">Related Images</h3>
+              <div className="related-images">
+                <img className="mr-4" src="https://burst.shopifycdn.com/photos/purple-cropped-wig-with-glittery-drag-fashion_x182.progressive.jpg" />
+                <img className="mr-4" src="https://burst.shopifycdn.com/photos/purple-cropped-wig-with-glittery-drag-fashion_x182.progressive.jpg" />
+                <img className="mr-4" src="https://burst.shopifycdn.com/photos/purple-cropped-wig-with-glittery-drag-fashion_x182.progressive.jpg" />
+                <img className="mr-4" src="https://burst.shopifycdn.com/photos/purple-cropped-wig-with-glittery-drag-fashion_x182.progressive.jpg" />
+                <img className="mr-4" src="https://burst.shopifycdn.com/photos/purple-cropped-wig-with-glittery-drag-fashion_x182.progressive.jpg" />
+              </div>
+            </div>
+            
           </div>
 
           <div className="user-details px-4 ml-8">
@@ -27,11 +39,7 @@ const PhotoDetail = () => (
           </div>
         </div>
 
-        <div className="related-images">
-          <img src="https://burst.shopifycdn.com/photos/purple-cropped-wig-with-glittery-drag-fashion_x182.progressive.jpg" />
-          <img src="https://burst.shopifycdn.com/photos/purple-cropped-wig-with-glittery-drag-fashion_x182.progressive.jpg" />
-          <img src="https://burst.shopifycdn.com/photos/purple-cropped-wig-with-glittery-drag-fashion_x182.progressive.jpg" />
-        </div>
+        
       </div>
     </div>
   </main>

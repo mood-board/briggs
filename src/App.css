@@ -133,10 +133,11 @@ main {
   width: 40px;
 }
 
-.related-images  {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
+
+.related-images {
+  margin-top: 4px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(111px, 1fr));
+  grid-gap: 12px;
 }
 
