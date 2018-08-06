@@ -2,6 +2,10 @@ import React, {Component} from "react"
 import axios from "axios"
 import {Link} from "react-router-dom"
 import "./PhotoGallery.css"
+<<<<<<< HEAD
+=======
+import "../api/free-images.json"
+>>>>>>> origin/develop
 
 
 class PhotoGallery extends Component {
@@ -12,11 +16,18 @@ class PhotoGallery extends Component {
             photos: []
         }
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/develop
     componentWillMount() {
        let freeImagesURL = "https://api.myjson.com/bins/1e2fdc"
        axios.get(freeImagesURL)
         .then(res => this.setState({ photos: res.data}))
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/develop
     }
 
     render() {
@@ -27,8 +38,13 @@ class PhotoGallery extends Component {
         }
         let freeImageListing = this.state.photos.map(item => {
             return (
+<<<<<<< HEAD
                 <Link key={item.slug} className="grid_item" to={`/photos/${item.slug}`}>
                     <img alt="" src={item.url} className="rounded-sm" />
+=======
+                <Link className="grid_item" to={`/photos/${item.slug}`}>
+                    <img alt="" src={item.url} />
+>>>>>>> origin/develop
                 </Link>
             )
         })

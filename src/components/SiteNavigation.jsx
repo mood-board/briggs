@@ -1,10 +1,9 @@
-import React, {Component} from 'react'
-import logo from '../logo.svg';
+import React from 'react'
 
 
 const SiteNavigation = () => {
   return (
-    <div className="flex py-2 pin-t pin-x z-100 h-16 items-center bg-black text-black">
+    <div className="flex py-2 pin-t pin-x z-100 h-16 items-center transparent">
       <div className="container">
       <div className="w-full max-w-screen-xl relative mx-auto px-6">
         <div className="flex items-center -mx-6">

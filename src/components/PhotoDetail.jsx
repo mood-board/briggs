@@ -33,10 +33,8 @@ const PhotoDetail = () => (
           <img src="https://burst.shopifycdn.com/photos/purple-cropped-wig-with-glittery-drag-fashion_x182.progressive.jpg" />
         </div>
       </div>
-
-      
-
     </div>
   </main>
 )
+
 export default PhotoDetail

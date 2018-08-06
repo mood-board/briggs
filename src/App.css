@@ -1,6 +1,7 @@
 
 body {
   background: #141414;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
@@ -138,5 +139,4 @@ main {
   flex-direction: row;
   flex-wrap: nowrap;
 }
-
 
