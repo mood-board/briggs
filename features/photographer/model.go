@@ -24,7 +24,7 @@ type Photographer struct {
 	Password       string         `json:"password" bson:"-"`
 	HashedPassword []byte         `json:"hash_password"`
 	Email          string         `json:"email"`
-	Migrate        string         `json:"migrate"` //How t
+	Migrate        string         `json:"migrate"` //How the user loggedin FB or Google+
 	City           string         `json:"city"`
 	Country        string         `json:"country"`
 	DateOfBirth    string         `json:"dob"`
@@ -41,6 +41,16 @@ func (p *Photographer) Add(conf *config.Config) error {
 	defer session.Close()
 	collection := session.DB(config.DATABASENAME).C(config.USERSCOLLECTION)
 	return collection.Insert(p)
+}
+
+//Find Gets the User Detail by username
+func (p *Photographer) Find(conf *config.Config, username string) (Photographer, error) {
+	session := conf.Session.Copy()
+	defer session.Close()
+	var photographer Photographer
+	collection := session.DB(config.DATABASENAME).C(config.USERSCOLLECTION)
+	err := collection.Find(bson.M{"username": username}).One(&photographer)
+	return photographer, err
 }
 
 //Update Modifies a user credentials
@@ -69,10 +79,7 @@ func (p *Photographer) Listings(conf *config.Config, page int) ([]Photographer, 
 	pageSize := 20
 	collection := session.DB(config.DATABASENAME).C(config.USERSCOLLECTION)
 	err := collection.Find(bson.M{}).Sort("-created_at").Skip(pageSize * (page - 1)).Limit(pageSize).All(&photographers)
-	if err != nil {
-		return photographers, err
-	}
-	return photographers, nil
+	return photographers, err
 }
 
 //Exists Checks if the Users E-mail already exists
@@ -82,8 +89,5 @@ func (p *Photographer) Exists(conf *config.Config) bool {
 	var photographer Photographer
 	collection := session.DB(config.DATABASENAME).C(config.USERSCOLLECTION)
 	err := collection.Find(bson.M{"email": p.Email}).One(&photographer)
-	if err != nil {
-		return false
-	}
-	return true
+	return err == nil
 }

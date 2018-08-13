@@ -62,12 +62,12 @@ func Init() {
 	config.Session = session
 	config.MongoDB = DATABASENAME
 
-	config.Encryption.Public, err = ioutil.ReadFile("./config/encryption_keys/app.rsa.pub")
+	config.Encryption.Public, err = ioutil.ReadFile("./config/encryption_keys/mykey.pub")
 	if err != nil {
 		log.Println("Error reading public key")
 	}
 
-	config.Encryption.Private, err = ioutil.ReadFile("./config/encryption_keys/app.rsa")
+	config.Encryption.Private, err = ioutil.ReadFile("./config/encryption_keys/mykey.pem")
 	if err != nil {
 		log.Println("Error reading private key")
 	}
