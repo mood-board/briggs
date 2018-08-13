@@ -74,3 +74,16 @@ func (p *Photographer) Listings(conf *config.Config, page int) ([]Photographer, 
 	}
 	return photographers, nil
 }
+
+//Exists Checks if the Users E-mail already exists
+func (p *Photographer) Exists(conf *config.Config) bool {
+	session := conf.Session.Copy()
+	defer session.Close()
+	var photographer Photographer
+	collection := session.DB(config.DATABASENAME).C(config.USERSCOLLECTION)
+	err := collection.Find(bson.M{"email": p.Email}).One(&photographer)
+	if err != nil {
+		return false
+	}
+	return true
+}
