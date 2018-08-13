@@ -34,8 +34,8 @@ type Config struct {
 }
 
 type Encryption struct {
-	PublicKey  []byte
-	PrivateKey []byte
+	Public  []byte
+	Private []byte
 }
 
 type JWTConfig struct {
@@ -62,12 +62,12 @@ func Init() {
 	config.Session = session
 	config.MongoDB = DATABASENAME
 
-	config.Encryption.PublicKey, err = ioutil.ReadFile("./config/encryption_keys/app.rsa.pub")
+	config.Encryption.Public, err = ioutil.ReadFile("./config/encryption_keys/app.rsa.pub")
 	if err != nil {
 		log.Println("Error reading public key")
 	}
 
-	config.Encryption.PrivateKey, err = ioutil.ReadFile("./config/encryption_keys/app.rsa")
+	config.Encryption.Private, err = ioutil.ReadFile("./config/encryption_keys/app.rsa")
 	if err != nil {
 		log.Println("Error reading private key")
 	}
