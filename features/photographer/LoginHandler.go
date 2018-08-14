@@ -4,10 +4,12 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"time"
 
 	"golang.org/x/crypto/bcrypt"
 
-	"github.com/dgrijalva/jwt-go"
+	"github.com/go-chi/jwtauth"
+	"github.com/go-chi/render"
 	"github.com/ofonimefrancis/brigg/internal/config"
 	"github.com/ofonimefrancis/brigg/message"
 
@@ -46,14 +48,42 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := bcrypt.CompareHashAndPassword(user.HashedPassword, []byte(userCredential.Password)); err != nil {
-		log.Println("Account exist... Creating token")
-		token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-			"email":    userCredential.Email,
-			"password": userCredential.Password,
-		})
-		tokenString, _ := token.SignedString([]byte(config.Get().JwtKey))
-		w.Header().Set("Content-Type", "application/json; charset=utf-8")
-		json.NewEncoder(w).Encode(JwtToken{Token: tokenString})
+		log.Println("password err: ", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		render.JSON(w, r, "Internal Server Error")
+		return
+
 	}
 
+	_, tokenString, err := tokenAuth.Encode(jwtauth.Claims{"email": user.Email, "id": user.ID})
+
+	if err != nil {
+		log.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		render.JSON(w, r, "Internal Server Error")
+		return
+	}
+
+	expires := time.Now().AddDate(1, 0, 0)
+
+	ck := http.Cookie{
+		Name: "jwt",
+		// Domain: "foo.com",
+		HttpOnly: false,
+		Path:     "/",
+		Expires:  expires,
+		Value:    tokenString,
+	}
+
+	// write the cookie to response
+	http.SetCookie(w, &ck)
+
+	resp := UserAuthResponse{
+		User:    user,
+		Message: "Login success",
+		Token:   tokenString,
+	}
+
+	log.Printf("login %#v", resp)
+	render.JSON(w, r, resp)
 }

@@ -4,15 +4,14 @@ import (
 	"github.com/go-chi/chi"
 )
 
+//Routes Photographer route
 func Routes() *chi.Mux {
 	router := chi.NewRouter()
 
-	//Get the Users Profile
-	//?user/$username
-
 	//CRUD
 	router.Get("/{username}", FindUser)
-	router.Post("/", SignUpHandler)
-	router.Post("/authenticate", LoginHandler)
+	router.Get("/", Find)
+	router.Post("/authenticate/signup", SignUpHandler)
+	router.Post("/authenticate/login", LoginHandler)
 	return router
 }

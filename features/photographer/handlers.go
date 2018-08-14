@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/go-chi/chi"
 	"github.com/ofonimefrancis/brigg/internal/config"
@@ -23,6 +24,24 @@ func FindUser(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println("Error retrieving user data", err)
 		message.NewAPIError(&message.APIError{Message: "Error retrieving user data"}, w)
+		return
+	}
+	message.NewAPIResponse(&message.APIResponse{Data: p}, w, http.StatusOK)
+	return
+}
+
+func Find(w http.ResponseWriter, r *http.Request) {
+	var user Photographer
+	page, err := strconv.Atoi(r.URL.Query().Get("page"))
+
+	if err != nil {
+		page = 1
+	}
+
+	p, err := user.Listings(config.Get(), page)
+	if err != nil {
+		log.Println(err)
+		message.NewAPIError(&message.APIError{Message: "Error retrieving Listing"}, w)
 		return
 	}
 	message.NewAPIResponse(&message.APIResponse{Data: p}, w, http.StatusOK)

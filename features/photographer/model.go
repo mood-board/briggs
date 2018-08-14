@@ -28,7 +28,7 @@ type Photographer struct {
 	City           string         `json:"city"`
 	Country        string         `json:"country"`
 	DateOfBirth    string         `json:"dob"`
-	IsActive       string         `json:"is_active"`
+	IsActive       bool           `json:"is_active"`
 	Description    string         `json:"about_me"`
 	OnlineProfiles onlineProfiles `json:"online_profile"`
 	CreatedAt      time.Time      `json:"created_at"`

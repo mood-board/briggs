@@ -8,6 +8,7 @@ import (
 
 	"github.com/go-chi/jwtauth"
 	"github.com/go-chi/render"
+	uuid "github.com/satori/go.uuid"
 
 	"github.com/ofonimefrancis/brigg/internal/config"
 	"github.com/ofonimefrancis/brigg/message"
@@ -15,9 +16,9 @@ import (
 )
 
 type UserAuthResponse struct {
-	User    Photographer
-	Token   string
-	Message string
+	User    Photographer `json:"user"`
+	Token   string       `json:"token"`
+	Message string       `json:"message"`
 }
 
 // SignUpHandler is used to handler signup via various approaches
@@ -37,9 +38,14 @@ func SignUpHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	uid, _ := uuid.NewV4()
+
 	pwdHash, _ := utils.HashPassword(photographer.Password)
 	photographer.HashedPassword = pwdHash
 	photographer.Password = ""
+
+	photographer.ID = uid.String()
+	photographer.IsActive = true
 	photographer.CreatedAt = time.Now()
 	photographer.UpdatedAt = time.Now()
 
