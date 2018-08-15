@@ -17,6 +17,7 @@ import (
 	"github.com/go-chi/docgen/raml"
 	"github.com/go-chi/render"
 	"github.com/ofonimefrancis/brigg/features/photographer"
+	"github.com/ofonimefrancis/brigg/features/uploads"
 	"github.com/ofonimefrancis/brigg/internal/config"
 	yaml "gopkg.in/yaml.v2"
 )
@@ -42,6 +43,7 @@ func Routes() *chi.Mux {
 	router.Use(chiCors.Handler)
 
 	router.Mount("/api/users", photographer.Routes()) // Mount Golang Program debug/profiling route
+	router.Mount("/api/uploads", uploads.Routes())    //Uploads by photographers
 
 	router.Get("/*", func(w http.ResponseWriter, r *http.Request) { //TODO(tonyalaribe): Confirm if this is important, or can be replaced with notfound handler
 		http.ServeFile(w, r, "./public/index.html")

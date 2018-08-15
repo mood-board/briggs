@@ -76,5 +76,4 @@ func SignUpHandler(w http.ResponseWriter, r *http.Request) {
 		Token:   tokenString,
 	}
 	render.JSON(w, r, resp)
-
 }

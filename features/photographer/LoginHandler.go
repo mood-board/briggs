@@ -67,8 +67,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	expires := time.Now().AddDate(1, 0, 0)
 
 	ck := http.Cookie{
-		Name: "jwt",
-		// Domain: "foo.com",
+		Name:     "jwt",
 		HttpOnly: false,
 		Path:     "/",
 		Expires:  expires,
