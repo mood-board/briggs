@@ -48,7 +48,8 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//Save Upload to the database
-
+  //TODO: Save Google cloud storage public URL to the database
+  
 	message.NewAPIResponse(&message.APIResponse{Success: true, Message: "Success Uploading file"}, w, http.StatusMultiStatus)
 
 }
