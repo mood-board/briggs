@@ -6,7 +6,7 @@ import (
 
 func Routes() *chi.Mux {
 	router := chi.NewRouter()
-
-	router.Post("/new", UploadHandler)
+	router.Post("/", MultiUploadHandler)
+	router.Post("/new/{userID}", UploadHandler)
 	return router
 }

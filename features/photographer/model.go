@@ -53,6 +53,18 @@ func (p *Photographer) Find(conf *config.Config, username string) (Photographer,
 	return photographer, err
 }
 
+func (p *Photographer) FindByID(conf *config.Config, user_id string) (Photographer, error) {
+	session := conf.Session.Copy()
+	defer session.Close()
+	var photographer Photographer
+	collection := session.DB(config.DATABASENAME).C(config.USERSCOLLECTION)
+	err := collection.Find(bson.M{"id": user_id}).One(&photographer)
+	if err != nil {
+		return photographer, err
+	}
+	return photographer, nil
+}
+
 //Update Modifies a user credentials
 func (p *Photographer) Update(conf *config.Config, update interface{}) error {
 	session := conf.Session.Copy()
