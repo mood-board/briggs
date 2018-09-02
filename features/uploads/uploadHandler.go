@@ -2,6 +2,7 @@ package uploads
 
 import (
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/ofonimefrancis/brigg/features/photographer"
@@ -10,9 +11,12 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
+//PhotoUploadHandler Handles Image Upload by a User
 func PhotoUploadHandler(w http.ResponseWriter, r *http.Request) {
 	userID := r.FormValue("user_id")
 	tags := r.FormValue("tags")
+	size, _ := strconv.Atoi(r.FormValue("size"))
+
 	imageURL, err := uploadFileFromForm(r)
 
 	if err != nil {
@@ -34,11 +38,11 @@ func PhotoUploadHandler(w http.ResponseWriter, r *http.Request) {
 		URL:        imageURL,
 		UploadedAt: time.Now(),
 		UsersName:  user.FirstName,
-		Type:       PHOTO,
+		Type:       PHOTO, //TODO: Check the uploaded type and assign type based on that
 		Tags:       tags,
+		ImageSize:  size,
 	}
 
 	message.NewAPIResponse(&message.APIResponse{Success: true, Data: uploads}, w, http.StatusOK)
 	return
-
 }

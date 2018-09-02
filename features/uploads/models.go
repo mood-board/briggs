@@ -23,7 +23,7 @@ type Uploads struct {
 	Type       string    `json:"type"`
 	PageURL    string    `json:"page_url"`
 	ImageWidth string    `json:"width"`
-	ImageSize  string    `json:"image_size"`
+	ImageSize  int       `json:"image_size"`
 }
 
 //Add Saves an upload with meta data to the database
