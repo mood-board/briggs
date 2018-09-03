@@ -24,6 +24,7 @@ type Photographer struct {
 	Password       string         `json:"password" bson:"-"`
 	HashedPassword []byte         `json:"hash_password"`
 	Email          string         `json:"email"`
+	AvatarURL      string         `json:"avatar_url"`
 	Migrate        string         `json:"migrate"` //How the user loggedin FB or Google+
 	City           string         `json:"city"`
 	Country        string         `json:"country"`

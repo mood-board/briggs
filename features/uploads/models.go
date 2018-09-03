@@ -3,6 +3,7 @@ package uploads
 import (
 	"time"
 
+	"github.com/globalsign/mgo/bson"
 	"github.com/ofonimefrancis/brigg/internal/config"
 )
 
@@ -32,4 +33,16 @@ func (u *Uploads) Add(conf *config.Config) error {
 	defer session.Close()
 	collection := session.DB(config.DATABASENAME).C(config.UPLOADSCOLLECTION)
 	return collection.Insert(u)
+}
+
+//Listings Fetch Image Uploads from a USer
+func (u *Uploads) Listings(conf *config.Config, userID string, page int) ([]Uploads, error) {
+	session := conf.Session.Copy()
+	defer session.Close()
+
+	var uploads []Uploads
+	pageSize := 20
+	collection := session.DB(config.DATABASENAME).C(config.USERSCOLLECTION)
+	err := collection.Find(bson.M{"user_id": userID}).Skip(pageSize * (page - 1)).Limit(pageSize).All(&uploads)
+	return uploads, err
 }

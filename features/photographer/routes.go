@@ -12,6 +12,7 @@ func Routes() *chi.Mux {
 	router.Get("/{username}", FindUser)
 	router.Get("/", Find)
 	router.Get("/id/{user_id}", GetUserByID)
+	router.Put("/avatar/{user_id}", UpdateAvatar)
 	router.Post("/authenticate/signup", SignUpHandler)
 	router.Post("/authenticate/login", LoginHandler)
 	return router
