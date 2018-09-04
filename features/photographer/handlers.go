@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/ofonimefrancis/brigg/internal/config"
@@ -43,36 +42,6 @@ func GetUserByID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	message.NewAPIResponse(&message.APIResponse{Data: p, Success: true}, w, http.StatusOK)
-	return
-}
-
-//UpdateAvatar PUT request to update the users avatar URL
-func UpdateAvatar(w http.ResponseWriter, r *http.Request) {
-	userID := chi.URLParam(r, "user_id")
-
-	imageURL, err := uploadProfilePicture(r)
-	if err != nil {
-		//message.NewAPIError(&message.APIError{Message: "Error Uploading avatar"}, w)
-		log.Printf("Error uploading image %v", err)
-		return
-	}
-	var p Photographer
-	user, err := p.FindByID(config.Get(), userID)
-	if err != nil {
-		message.NewAPIError(&message.APIError{Message: "Invalid User ID"}, w)
-		log.Printf("Invalid User ID: %v", err)
-		return
-	}
-	user.AvatarURL = imageURL
-	user.UpdatedAt = time.Now()
-
-	if err := p.Update(config.Get(), user); err != nil {
-		message.NewAPIError(&message.APIError{Message: "Error Updating Database"}, w)
-		log.Printf("Error Updating Database: %v", err)
-		return
-	}
-
-	message.NewAPIResponse(&message.APIResponse{Success: true, Message: "Profile Picture updated"}, w, http.StatusOK)
 	return
 }
 

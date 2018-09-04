@@ -8,23 +8,24 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/ofonimefrancis/brigg/internal/config"
+	"github.com/ofonimefrancis/brigg/message"
 )
 
 //Routes Photographer route
 func Routes() *chi.Mux {
 	router := chi.NewRouter()
 
-	router.Post("/upload/{user_id}", UploadAvatar)
+	router.Put("/upload/{user_id}", UploadAvatar)
 	//CRUD
 	router.Get("/{username}", FindUser)
 	router.Get("/", Find)
 	router.Get("/id/{user_id}", GetUserByID)
-	router.Put("/avatar/{user_id}", UpdateAvatar)
 	router.Post("/authenticate/signup", SignUpHandler)
 	router.Post("/authenticate/login", LoginHandler)
 	return router
 }
 
+//UploadAvatar Upload(Changes the Users Avatar URL and uploads to CloudStorage)
 func UploadAvatar(w http.ResponseWriter, r *http.Request) {
 	userID := chi.URLParam(r, "user_id")
 
@@ -32,34 +33,29 @@ func UploadAvatar(w http.ResponseWriter, r *http.Request) {
 	user, err := p.FindByID(config.Get(), userID)
 	if err != nil {
 		log.Printf("Invalid UserID: %v\n", err)
+		message.NewAPIError(&message.APIError{Message: "Invalid User ID"}, w)
 		return
 	}
 
 	imageURL, err := uploadProfilePicture(r)
 	if err != nil {
-		log.Printf("%v\n", err)
+		log.Printf("Error Uploading Profile Picture%v\n", err)
+		message.NewAPIError(&message.APIError{Message: "Error Uploading Profile Picture"}, w)
 		return
 	}
 
 	fmt.Printf("Image URL: %s\n", imageURL)
 
-	// user.Update(config.Get(), bson.M{"$set": bson.M{
-	// 	"id":            user.ID,
-	// 	"username":      user.Username,
-	// 	"first_name":    user.FirstName,
-	// 	"password":      user.Password,
-	// 	"hash_password": user.HashedPassword,
-	// 	"email":         user.Email,
-	// 	"last_name":     user.LastName,
-	// 	"avatar_url":    imageURL,
-	// 	"city":          user.City,
-	// 	"country":       user.Country,
-	// 	"updated_at":    time.Now(),
-	// }})
-
 	user.AvatarURL = imageURL
 	user.UpdatedAt = time.Now()
 
-	user.Update(config.Get(), user)
+	if err := user.Update(config.Get(), user); err != nil {
+		log.Printf("Error Connecting to database... %v\n", err)
+		message.NewAPIError(&message.APIError{Message: "Database Error"}, w)
+		return
+	}
+
 	log.Println("All done... Refactor codebase")
+	message.NewAPIResponse(&message.APIResponse{Success: true, Message: "Upload Successful"}, w, http.StatusOK)
+	return
 }
