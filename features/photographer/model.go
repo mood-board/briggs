@@ -74,6 +74,14 @@ func (p *Photographer) Update(conf *config.Config, update interface{}) error {
 	return collection.Update(bson.M{"id": p.ID}, update)
 }
 
+//UpdateByID Updates a user credential by their ID
+func (p *Photographer) UpdateByID(conf *config.Config, update interface{}) error {
+	session := conf.Session.Copy()
+	defer session.Close()
+	collection := session.DB(config.DATABASENAME).C(config.USERSCOLLECTION)
+	return collection.UpdateId(p.ID, update)
+}
+
 //DisableAccount Disables a users account
 func (p *Photographer) DisableAccount(conf *config.Config) error {
 	session := conf.Session.Copy()

@@ -32,11 +32,6 @@ func getGoogleCloud() (service *storage.Service, err error) {
 }
 
 func uploadProfilePicture(r *http.Request) (url string, err error) {
-	if err := r.ParseMultipartForm(1 << 20); err != nil {
-		fmt.Printf("parseForm: %v\n", err)
-		return "", nil
-	}
-
 	file, fh, err := r.FormFile("avatar")
 	if err == http.ErrMissingFile {
 		fmt.Printf("Missing File %v", err)
@@ -46,7 +41,6 @@ func uploadProfilePicture(r *http.Request) (url string, err error) {
 		fmt.Printf("Error: %v", err)
 		return "", err
 	}
-	fmt.Println("After Error checking")
 
 	// random filename, retaining existing extension.
 	name := fmt.Sprintf("%s_%s%s", uuid.Must(uuid.NewV4()).String(), fh.Filename, path.Ext(fh.Filename))
@@ -61,12 +55,10 @@ func uploadProfilePicture(r *http.Request) (url string, err error) {
 		CacheControl: "public, max-age=31536000",
 		Acl:          []*storage.ObjectAccessControl{{Entity: "allUsers", Role: "READER"}},
 	}
-	w, err := service.Objects.Insert("yescort", object).Media(file).Do()
+	_, err = service.Objects.Insert("yescort", object).Media(file).Do()
 	if err != nil {
 		return "", err
 	}
-	fmt.Printf("%v", w)
-	//w.Acl = []*storage.ObjectAccessControl{{Entity: "allUsers", Role: "READER"}}
 
 	const publicURL = "https://storage.googleapis.com/%s/%s"
 	return fmt.Sprintf(publicURL, "yescort", name), nil
