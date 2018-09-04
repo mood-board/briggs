@@ -15,6 +15,10 @@ import (
 	"github.com/ofonimefrancis/brigg/utils"
 )
 
+var (
+	DefaultAvatarURL = "https://upload.wikimedia.org/wikipedia/commons/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg"
+)
+
 type UserAuthResponse struct {
 	User    Photographer `json:"user"`
 	Token   string       `json:"token"`
@@ -30,6 +34,7 @@ func SignUpHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println(message.InvalidPayload)
 		return
 	}
+
 	defer r.Body.Close()
 
 	if photographer.Exists(config.Get()) {
@@ -46,6 +51,7 @@ func SignUpHandler(w http.ResponseWriter, r *http.Request) {
 
 	photographer.ID = uid.String()
 	photographer.IsActive = true
+	photographer.AvatarURL = DefaultAvatarURL
 	photographer.CreatedAt = time.Now()
 	photographer.UpdatedAt = time.Now()
 

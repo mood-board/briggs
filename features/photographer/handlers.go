@@ -43,7 +43,6 @@ func GetUserByID(w http.ResponseWriter, r *http.Request) {
 	}
 	message.NewAPIResponse(&message.APIResponse{Data: p, Success: true}, w, http.StatusOK)
 	return
-
 }
 
 func Find(w http.ResponseWriter, r *http.Request) {

@@ -12,6 +12,7 @@ import (
 
 func uploadFileFromForm(r *http.Request) (url string, err error) {
 	file, fh, err := r.FormFile("uploads")
+	fmt.Println(fh.Filename)
 	if err == http.ErrMissingFile {
 		return "", nil
 	}
