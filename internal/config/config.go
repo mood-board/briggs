@@ -18,10 +18,11 @@ var (
 )
 
 const (
-	DATABASENAME      = "seemars"
-	USERSCOLLECTION   = "users"
-	UPLOADSCOLLECTION = "uploads"
-	TAGCOLLECTION     = "tags"
+	DATABASENAME         = "seemars"
+	USERSCOLLECTION      = "users"
+	UPLOADSCOLLECTION    = "uploads"
+	CATEGORIESCOLLECTION = "category"
+	TAGCOLLECTION        = "tags"
 )
 
 //Config Holds the configuration settings for our application

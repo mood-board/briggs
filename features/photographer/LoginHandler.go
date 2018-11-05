@@ -8,7 +8,7 @@ import (
 
 	"golang.org/x/crypto/bcrypt"
 
-	"github.com/go-chi/jwtauth"
+	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/go-chi/render"
 	"github.com/ofonimefrancis/brigg/internal/config"
 	"github.com/ofonimefrancis/brigg/message"
@@ -55,7 +55,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	_, tokenString, err := tokenAuth.Encode(jwtauth.Claims{"email": user.Email, "id": user.ID})
+	_, tokenString, err := tokenAuth.Encode(jwt.MapClaims{"email": user.Email, "id": user.ID})
 
 	if err != nil {
 		log.Println(err)
