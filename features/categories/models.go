@@ -24,3 +24,15 @@ func (c *Category) FindByCategoryName(conf *config.Config, categoryName string) 
 	}
 	return uploadsInCategory, nil
 }
+
+//ListCategories A list of all the categories
+func (c *Category) ListCategories(conf *config.Config) ([]Category, error) {
+	session := conf.Session.Copy()
+	defer session.Close()
+	var allCategories []Category
+	collection := session.DB(config.DATABASENAME).C(config.CATEGORIESCOLLECTION)
+	if err := collection.Find(bson.M{}).All(&allCategories); err != nil {
+		return nil, err
+	}
+	return allCategories, nil
+}

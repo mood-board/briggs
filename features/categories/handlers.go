@@ -25,3 +25,19 @@ func AddCategory(w http.ResponseWriter, r *http.Request) {
 
 	message.NewAPIResponse(&message.APIResponse{Success: true, Message: "New Category successfully created"}, w, http.StatusCreated)
 }
+
+func AllCategories(w http.ResponseWriter, r *http.Request) {
+	category := new(Category)
+	allCategories, err := category.ListCategories(config.Get())
+	if err != nil {
+		log.Printf("AllCategories-Error %v\n", err)
+		message.NewAPIError(&message.APIError{Message: "Error retrieving categories"}, w)
+		return
+	}
+	if len(allCategories) == 0 {
+		log.Printf("There are currently no categories in our database")
+		message.NewAPIResponse(&message.APIResponse{Data: map[string]string{}}, w, http.StatusOK)
+		return
+	}
+	message.NewAPIResponse(&message.APIResponse{Data: allCategories}, w, http.StatusOK)
+}
