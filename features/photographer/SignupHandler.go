@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/go-chi/jwtauth"
+	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/go-chi/render"
 	uuid "github.com/satori/go.uuid"
 
@@ -60,7 +60,7 @@ func SignUpHandler(w http.ResponseWriter, r *http.Request) {
 	//TODO: Send E-mail
 
 	//Generate JWT token
-	_, tokenString, err := tokenAuth.Encode(jwtauth.Claims{"id": photographer.ID, "email": photographer.Email})
+	_, tokenString, err := tokenAuth.Encode(jwt.MapClaims{"id": photographer.ID, "email": photographer.Email})
 	if err != nil {
 		message.NewAPIError(&message.APIError{Status: http.StatusInternalServerError, Message: "Internal Server Error"}, w)
 		return

@@ -3,6 +3,7 @@ package photographer
 import (
 	"fmt"
 
+	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/go-chi/jwtauth"
 	"github.com/ofonimefrancis/brigg/internal/config"
 )
@@ -11,7 +12,7 @@ var tokenAuth *jwtauth.JWTAuth
 
 func init() {
 	tokenAuth = jwtauth.New("HS256", config.Get().Encryption.Private, config.Get().Encryption.Public)
-	_, tokenString, _ := tokenAuth.Encode(jwtauth.Claims{"user_id": 123})
+	_, tokenString, _ := tokenAuth.Encode(jwt.MapClaims{"user_id": 123})
 	fmt.Printf("DEBUG: a sample jwt is %s\n\n", tokenString)
 }
 
