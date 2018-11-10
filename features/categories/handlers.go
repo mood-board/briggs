@@ -7,6 +7,7 @@ import (
 
 	"github.com/ofonimefrancis/brigg/internal/config"
 	"github.com/ofonimefrancis/brigg/message"
+	uuid "github.com/satori/go.uuid"
 )
 
 func AddCategory(w http.ResponseWriter, r *http.Request) {
@@ -16,13 +17,13 @@ func AddCategory(w http.ResponseWriter, r *http.Request) {
 		message.NewAPIError(&message.APIError{Message: "Invalid Payload"}, w)
 		return
 	}
-
+	uid, _ := uuid.NewV4()
+	newCategory.ID = uid.String()
 	if err := newCategory.Add(config.Get()); err != nil {
 		log.Printf("Error creating a new Category: %v\n", err)
 		message.NewAPIError(&message.APIError{Message: "Error creating a new category"}, w)
 		return
 	}
-
 	message.NewAPIResponse(&message.APIResponse{Success: true, Message: "New Category successfully created"}, w, http.StatusCreated)
 }
 
@@ -36,7 +37,7 @@ func AllCategories(w http.ResponseWriter, r *http.Request) {
 	}
 	if len(allCategories) == 0 {
 		log.Printf("There are currently no categories in our database")
-		message.NewAPIResponse(&message.APIResponse{Data: map[string]string{}}, w, http.StatusOK)
+		message.NewAPIResponse(&message.APIResponse{Data: []map[string]interface{}{}}, w, http.StatusOK)
 		return
 	}
 	message.NewAPIResponse(&message.APIResponse{Data: allCategories}, w, http.StatusOK)

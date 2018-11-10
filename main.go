@@ -16,6 +16,7 @@ import (
 	"github.com/go-chi/docgen"
 	"github.com/go-chi/docgen/raml"
 	"github.com/go-chi/render"
+	"github.com/ofonimefrancis/brigg/features/categories"
 	"github.com/ofonimefrancis/brigg/features/photographer"
 	"github.com/ofonimefrancis/brigg/features/uploads"
 	"github.com/ofonimefrancis/brigg/internal/config"
@@ -44,6 +45,7 @@ func Routes() *chi.Mux {
 
 	router.Mount("/api/users", photographer.Routes()) // Mount Golang Program debug/profiling route
 	router.Mount("/api/uploads", uploads.Routes())    //Uploads by photographers
+	router.Mount("/api/categories", categories.Routes())
 
 	router.Get("/*", func(w http.ResponseWriter, r *http.Request) { //TODO(tonyalaribe): Confirm if this is important, or can be replaced with notfound handler
 		http.ServeFile(w, r, "./public/index.html")
@@ -103,11 +105,11 @@ func main() {
 	}
 
 	walkFunc := func(method string, route string, handler http.Handler, middlewares ...func(http.Handler) http.Handler) error {
-		log.Printf("👉 %s %s\n", method, route)
+		log.Printf("%s %s\n", method, route)
 		return nil
 	}
 	if err := chi.Walk(router, walkFunc); err != nil {
-		log.Panicf("⚠️  Logging err: %s\n", err.Error())
+		log.Panicf("Logging err: %s\n", err.Error())
 	}
 
 	// This block of code will allow graceful shutdown of our server, using the server Shurdown method which is a part lf the standard library
@@ -122,15 +124,15 @@ func main() {
 		signal.Notify(sigint, os.Interrupt)
 		<-sigint
 
-		log.Println("😔 Shutting down. Goodbye..")
+		log.Println("Shutting down. Goodbye..")
 		if err := server.Shutdown(context.Background()); err != nil {
-			log.Printf("⚠️  HTTP server Shutdown error: %v", err)
+			log.Printf("HTTP server Shutdown error: %v", err)
 		}
 		close(idleConnsClosed)
 	}()
-	log.Printf("Serving at 🔥 %s \n", PORT)
+	log.Printf("Serving at Port %s \n", PORT)
 	if err := server.ListenAndServe(); err != http.ErrServerClosed {
-		log.Fatalf("⚠️  HTTP server ListenAndServe error: %v", err)
+		log.Fatalf("HTTP server ListenAndServe error: %v", err)
 	}
 
 	<-idleConnsClosed

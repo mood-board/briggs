@@ -12,7 +12,6 @@ func (c *Category) Add(conf *config.Config) error {
 	return collection.Insert(c)
 }
 
-//TODO: Add Pagination and sort by date created
 func (c *Category) FindByCategoryName(conf *config.Config, categoryName string) ([]Category, error) {
 	session := conf.Session.Copy()
 	defer session.Close()
